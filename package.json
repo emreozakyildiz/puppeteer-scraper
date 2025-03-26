@@ -1,0 +1,17 @@
+{
+  "name": "puppeteer-scraper",
+  "version": "1.0.0",
+  "description": "Web Scraping",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emre Özakyıldız",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^3.6.1",
+    "puppeteer": "^21.2.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
