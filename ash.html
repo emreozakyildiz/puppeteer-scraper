@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Falling Ash Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #222;
+        }
+        #bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <img id="bg" src="m2_forum_profile.png">
+    <canvas id="ashCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('ashCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const ashes = [];
+        for (let i = 0; i < 80; i++) {
+            ashes.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                size: 1 + Math.random() * 5,
+                opacity: 0.2 + Math.random() * 0.5,
+                dx: -0.2 + Math.random() * 0.4,
+                dy: -0.3 - Math.random() * 0.4,
+                flicker: Math.random() * 0.05
+            });
+        }
+
+        function drawAsh() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let a of ashes) {
+                ctx.beginPath();
+                ctx.globalAlpha = a.opacity + Math.sin(Date.now() * 0.005 + a.x) * a.flicker;
+                ctx.fillStyle = 'rgba(255, 190, 120, 0.9)';
+                ctx.arc(a.x, a.y, a.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                a.x += a.dx;
+                a.y += a.dy;
+
+                if (a.y + a.size < 0 || a.x < 0 || a.x > canvas.width) {
+                    a.x = Math.random() * canvas.width;
+                    a.y = canvas.height + Math.random() * 20;
+                }
+            }
+
+            requestAnimationFrame(drawAsh);
+        }
+
+        drawAsh();
+    </script>
+</body>
+</html>
